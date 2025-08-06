@@ -2,6 +2,14 @@
 class Assets {
   Assets._();
   
+  /// Assets for imagesCongrates
+  /// assets/images/congrates.png
+  static const String imagesCongrates = "assets/images/congrates.png";
+
+  /// Assets for imagesGoogleIcon
+  /// assets/images/google_icon.png
+  static const String imagesGoogleIcon = "assets/images/google_icon.png";
+
   /// Assets for imagesIcon
   /// assets/images/icon.png
   static const String imagesIcon = "assets/images/icon.png";
