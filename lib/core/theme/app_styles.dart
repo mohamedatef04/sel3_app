@@ -8,8 +8,8 @@ class AppStyles {
     fontWeight: FontWeight.bold,
     fontFamily: 'IBM Plex Sans Arabic',
   );
-  static TextStyle black14 = const TextStyle(
-    fontSize: 14,
+  static TextStyle black18 = const TextStyle(
+    fontSize: 18,
     color: AppColors.blackColor,
     fontWeight: FontWeight.w400,
     fontFamily: 'IBM Plex Sans Arabic',
