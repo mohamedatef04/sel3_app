@@ -42,7 +42,10 @@ class InsertNewPassViewBody extends StatelessWidget {
                 ),
 
                 CustomButton(
-                  text: 'تغيير كلمة المرور',
+                  child: Text(
+                    'تغيير كلمة المرور',
+                    style: AppStyles.white16,
+                  ),
                   onPressed: () {
                     GoRouter.of(context).push(CongratesView.routeName);
                   },

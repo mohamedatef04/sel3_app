@@ -37,7 +37,10 @@ class VerifyOtpDuringChangePassViewBody extends StatelessWidget {
               ),
               SizedBox(height: 20.h),
               CustomButton(
-                text: 'تحقق',
+                child: Text(
+                  'تأكيد',
+                  style: AppStyles.white16,
+                ),
                 onPressed: () {
                   GoRouter.of(context).push(InsertNewPassView.routeName);
                 },

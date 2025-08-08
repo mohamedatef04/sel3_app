@@ -31,7 +31,10 @@ class CongratesViewBody extends StatelessWidget {
             ),
 
             CustomButton(
-              text: 'العودة لتسجيل الدخول',
+              child: Text(
+                'العودة لتسجيل الدخول',
+                style: AppStyles.white16,
+              ),
               onPressed: () {},
             ),
           ],

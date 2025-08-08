@@ -39,7 +39,11 @@ class ChangePasswordViewBody extends StatelessWidget {
                 ),
 
                 CustomButton(
-                  text: 'ارسال رمز التحقق',
+                  child: Text(
+                    'استعادة كلمة المرور',
+                    style: AppStyles.white16,
+                  ),
+
                   onPressed: () {
                     GoRouter.of(
                       context,

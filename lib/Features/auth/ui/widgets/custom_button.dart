@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sel3_app/core/theme/app_colors.dart';
-import 'package:sel3_app/core/theme/app_styles.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.text, this.onPressed});
+  const CustomButton({super.key, this.onPressed, required this.child});
 
-  final String text;
   final VoidCallback? onPressed;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class CustomButton extends StatelessWidget {
           ),
         ),
         onPressed: onPressed,
-        child: Text(text, style: AppStyles.white16),
+        child: child,
       ),
     );
   }
