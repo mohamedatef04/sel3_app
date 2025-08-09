@@ -9,4 +9,13 @@ abstract class AuthRepo {
     required String email,
     required String password,
   });
+
+  Future<void> sendPhoneOtpToChangePassword({required String phone});
+  Future<void> verifyTheOtpSent({
+    required String otp,
+    required String phone,
+  });
+  Future<void> changePassword({
+    required String newPassword,
+  });
 }

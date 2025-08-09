@@ -46,4 +46,41 @@ class SupabaseAuthService {
       }
     }
   }
+
+  Future<void> sendPhoneOtpToChangePassword({required String phone}) async {
+    try {
+      await supabase.auth.signInWithOtp(
+        phone: phone,
+      );
+    } catch (e) {
+      throw CustomExeption(errorMessage: e.toString());
+    }
+  }
+
+  Future<void> verifyTheOtpSent({
+    required String otp,
+    required String phone,
+  }) async {
+    try {
+      await supabase.auth.verifyOTP(
+        phone: phone,
+        token: otp, // the code received in SMS
+        type: OtpType.sms,
+      );
+    } catch (e) {
+      throw CustomExeption(errorMessage: e.toString());
+    }
+  }
+
+  Future<void> changePassword({
+    required String newPassword,
+  }) async {
+    try {
+      await supabase.auth.updateUser(
+        UserAttributes(password: newPassword),
+      );
+    } catch (e) {
+      throw CustomExeption(errorMessage: e.toString());
+    }
+  }
 }

@@ -37,7 +37,9 @@ final router = GoRouter(
     ),
     GoRoute(
       path: VerifyOtpDuringChangePass.routeName,
-      builder: (context, state) => const VerifyOtpDuringChangePass(),
+      builder: (context, state) => VerifyOtpDuringChangePass(
+        phoneNumber: state.extra as String? ?? '',
+      ),
     ),
     GoRoute(
       path: InsertNewPassView.routeName,

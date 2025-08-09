@@ -35,4 +35,34 @@ class AuthRepoImpl implements AuthRepo {
       throw CustomExeption(errorMessage: e.errorMessage);
     }
   }
+
+  @override
+  Future<void> sendPhoneOtpToChangePassword({required String phone}) async {
+    try {
+      await supabaseAuthService.sendPhoneOtpToChangePassword(phone: phone);
+    } on CustomExeption catch (e) {
+      throw CustomExeption(errorMessage: e.errorMessage);
+    }
+  }
+
+  @override
+  Future<void> verifyTheOtpSent({
+    required String otp,
+    required String phone,
+  }) async {
+    try {
+      await supabaseAuthService.verifyTheOtpSent(otp: otp, phone: phone);
+    } on CustomExeption catch (e) {
+      throw CustomExeption(errorMessage: e.errorMessage);
+    }
+  }
+
+  @override
+  Future<void> changePassword({required String newPassword}) async {
+    try {
+      await supabaseAuthService.changePassword(newPassword: newPassword);
+    } on CustomExeption catch (e) {
+      throw CustomExeption(errorMessage: e.errorMessage);
+    }
+  }
 }
