@@ -1,30 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sel3_app/core/theme/app_colors.dart';
 import 'package:sel3_app/core/theme/app_styles.dart';
 
-class CustomHeaderText extends StatelessWidget {
-  const CustomHeaderText({
-    super.key,
-    required this.title,
-    required this.subtitle,
-  });
+class CsutomText extends StatelessWidget {
+  const CsutomText({super.key, required this.title, required this.subtitle});
   final String title;
   final String subtitle;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           title,
-          textAlign: TextAlign.center,
-          style: AppStyles.black24.copyWith(fontSize: 22.sp),
+          style: AppStyles.black24,
         ),
-        const Spacer(),
         Text(
           subtitle,
-          textAlign: TextAlign.center,
           style: AppStyles.white16.copyWith(color: AppColors.primaryColor),
         ),
       ],

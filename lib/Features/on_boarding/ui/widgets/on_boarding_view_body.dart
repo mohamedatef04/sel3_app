@@ -67,6 +67,7 @@ class _OnBoardingViewBodyState extends State<OnBoardingViewBody> {
           children: [
             PageView.builder(
               controller: pageController,
+              itemCount: onBoardingItems.length,
               itemBuilder: (context, index) => OnBoardingItem(
                 onBoardingItemModel: onBoardingItems[index],
               ),
