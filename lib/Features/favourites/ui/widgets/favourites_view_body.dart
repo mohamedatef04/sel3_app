@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sel3_app/Features/favourites/ui/widgets/fav_list.dart';
+import 'package:sel3_app/core/widgets/custom_app_bar.dart';
 
 class FavouritesViewBody extends StatelessWidget {
   const FavouritesViewBody({super.key});
@@ -6,12 +8,8 @@ class FavouritesViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: Text(
-          'Favourites View Body',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
+      appBar: CustomAppBar(title: 'المفضلة'),
+      body: FavList(),
     );
   }
 }

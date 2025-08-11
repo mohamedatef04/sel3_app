@@ -18,6 +18,7 @@ class CustomTextFormField extends StatelessWidget {
       vertical: 20,
     ),
     this.maxLines = 1,
+    this.fillColor = AppColors.whiteColor,
   });
   final TextEditingController? controller;
   final String hintText;
@@ -29,6 +30,7 @@ class CustomTextFormField extends StatelessWidget {
   final void Function(String)? onChanged;
   final EdgeInsetsGeometry? contentPadding;
   final int? maxLines;
+  final Color? fillColor;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class CustomTextFormField extends StatelessWidget {
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
 
-        fillColor: AppColors.whiteColor,
+        fillColor: fillColor,
         filled: true,
         hintStyle: const TextStyle(color: AppColors.greyColor),
         border: OutlineInputBorder(

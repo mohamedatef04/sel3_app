@@ -83,4 +83,12 @@ class SupabaseAuthService {
       throw CustomExeption(errorMessage: e.toString());
     }
   }
+
+  Future<bool> isSignedIn() async {
+    if (supabase.auth.currentUser != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

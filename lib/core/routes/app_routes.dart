@@ -8,6 +8,7 @@ import 'package:sel3_app/Features/auth/ui/views/verify_account_view.dart';
 import 'package:sel3_app/Features/auth/ui/views/verify_otp_during_change_pass.dart';
 import 'package:sel3_app/Features/chats/ui/views/chats_view.dart';
 import 'package:sel3_app/Features/favourites/ui/views/favourites_view.dart';
+import 'package:sel3_app/Features/home/ui/views/advertise_details_view.dart';
 import 'package:sel3_app/Features/home/ui/views/home_view.dart';
 import 'package:sel3_app/Features/home/ui/views/main_home_view.dart';
 import 'package:sel3_app/Features/on_boarding/ui/views/onboarding_view.dart';
@@ -69,6 +70,10 @@ final router = GoRouter(
     GoRoute(
       path: HomeView.routeName,
       builder: (context, state) => const HomeView(),
+    ),
+    GoRoute(
+      path: AdvertiseDetailsView.routeName,
+      builder: (context, state) => const AdvertiseDetailsView(),
     ),
 
     GoRoute(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sel3_app/Features/home/ui/views/main_home_view.dart';
 import 'package:sel3_app/Features/on_boarding/ui/views/onboarding_view.dart';
+import 'package:sel3_app/core/services/supabase_auth_service.dart';
 import 'package:sel3_app/core/theme/app_colors.dart';
 import 'package:sel3_app/core/utils/assets.dart';
 
@@ -15,10 +17,17 @@ class SplashViewBody extends StatefulWidget {
 class _SplashViewBodyState extends State<SplashViewBody> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 2), () {
-      GoRouter.of(context).pushReplacement(
-        OnboardingView.routeName,
-      ); // Navigate to OnboardingView after 2 seconds
+    Future.delayed(const Duration(seconds: 2), () async {
+      bool isSignedIn = await SupabaseAuthService().isSignedIn();
+      if (isSignedIn) {
+        GoRouter.of(context).pushReplacement(
+          MainHomeView.routeName,
+        );
+      } else {
+        GoRouter.of(context).pushReplacement(
+          OnboardingView.routeName,
+        ); // Navigate to OnboardingView after 2 seconds
+      }
     });
     super.initState();
   }
