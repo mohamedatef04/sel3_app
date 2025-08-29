@@ -9,6 +9,8 @@ import 'package:sel3_app/Features/chats/ui/views/conversation_view.dart';
 import 'package:sel3_app/Features/home/data/models/advertise_model.dart';
 import 'package:sel3_app/Features/home/ui/widgets/seller_info_placeholder.dart';
 import 'package:sel3_app/Features/seller_profile/ui/views/seller_profile.dart';
+import 'package:sel3_app/core/functions/call_seller.dart';
+import 'package:sel3_app/core/functions/copy_phone_number.dart';
 import 'package:sel3_app/core/services/get_it_service.dart';
 import 'package:sel3_app/core/theme/app_colors.dart';
 import 'package:sel3_app/core/theme/app_styles.dart';
@@ -171,16 +173,21 @@ class _SellerInfoWidgetState extends State<SellerInfoWidget> {
                           state.userModel.phone,
                           style: AppStyles.black18,
                         ),
-                        trailing: Container(
-                          width: 50.w,
-                          height: 50.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20.r),
-                            color: AppColors.primaryColor,
-                          ),
-                          child: const Icon(
-                            Icons.copy,
-                            color: Colors.white,
+                        trailing: GestureDetector(
+                          onTap: () {
+                            copyPhoneNumber(phone: state.userModel.phone);
+                          },
+                          child: Container(
+                            width: 50.w,
+                            height: 50.h,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.r),
+                              color: AppColors.primaryColor,
+                            ),
+                            child: const Icon(
+                              Icons.copy,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
@@ -191,29 +198,34 @@ class _SellerInfoWidgetState extends State<SellerInfoWidget> {
               Row(
                 spacing: 10.w,
                 children: [
-                  Container(
-                    width: MediaQuery.sizeOf(context).width * 0.45,
-                    height: 50.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.r),
-                      color: AppColors.primaryColor,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      spacing: 5.w,
-                      children: [
-                        const Icon(
-                          Icons.phone,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          'اتصل بالبائع',
-                          style: AppStyles.black18.copyWith(
+                  GestureDetector(
+                    onTap: () {
+                      callSeller(phone: state.userModel.phone);
+                    },
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width * 0.45,
+                      height: 50.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.r),
+                        color: AppColors.primaryColor,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 5.w,
+                        children: [
+                          const Icon(
+                            Icons.phone,
                             color: Colors.white,
-                            fontWeight: FontWeight.bold,
                           ),
-                        ),
-                      ],
+                          Text(
+                            'اتصل بالبائع',
+                            style: AppStyles.black18.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   GestureDetector(
