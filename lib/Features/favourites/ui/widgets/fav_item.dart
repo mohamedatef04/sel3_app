@@ -1,11 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sel3_app/Features/home/data/models/advertise_model.dart';
+import 'package:sel3_app/Features/home/ui/widgets/custom_fav_widget.dart';
+import 'package:sel3_app/core/functions/convert_time.dart';
 import 'package:sel3_app/core/theme/app_colors.dart';
 import 'package:sel3_app/core/theme/app_styles.dart';
-import 'package:sel3_app/core/utils/assets.dart';
 
 class FavItem extends StatelessWidget {
-  const FavItem({super.key});
+  const FavItem({super.key, required this.advertiseModel});
+  final AdvertiseModel advertiseModel;
 
   @override
   Widget build(BuildContext context) {
@@ -24,39 +28,26 @@ class FavItem extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Container(
-                  width: MediaQuery.sizeOf(context).width,
-                  height: 150.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20.r),
-                      topRight: Radius.circular(20.r),
-                    ),
-                    image: const DecorationImage(
-                      image: AssetImage(Assets.imagesItem),
-                      fit: BoxFit.fill,
+                CachedNetworkImage(
+                  imageUrl: advertiseModel.image_1 ?? '',
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: MediaQuery.sizeOf(context).width,
+                    height: 150.h,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
+
+                  errorWidget: (context, url, error) =>
+                      const Center(child: Icon(Icons.error)),
                 ),
                 Positioned(
                   right: 10.w,
                   top: 10.h,
-                  child: Container(
-                    width: 40.w,
-                    height: 40.h,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: Center(
-                      child: Image.asset(
-                        Assets.imagesHeart,
-                        color: AppColors.primaryColor,
-                        width: 30.w,
-                        height: 30.h,
-                      ),
-                    ),
-                  ),
+                  child: CustomFavWidget(advertiseModel: advertiseModel),
                 ),
               ],
             ),
@@ -76,7 +67,7 @@ class FavItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'اسم المنتج',
+                      advertiseModel.title,
                       style: AppStyles.black18.copyWith(
                         fontSize: 22.sp,
                         fontWeight: FontWeight.bold,
@@ -84,7 +75,7 @@ class FavItem extends StatelessWidget {
                     ),
 
                     Text(
-                      '500 جنيه',
+                      '${advertiseModel.price} جنيه',
                       style: AppStyles.black18.copyWith(
                         color: AppColors.primaryColor,
                         fontSize: 22.sp,
@@ -99,7 +90,7 @@ class FavItem extends StatelessWidget {
                           color: AppColors.primaryColor,
                         ),
                         Text(
-                          'منذ 3 ايام',
+                          timeAgoArabic(advertiseModel.timeCreated),
                           style: AppStyles.black18,
                         ),
                       ],
@@ -111,10 +102,10 @@ class FavItem extends StatelessWidget {
                           color: AppColors.primaryColor,
                         ),
                         Text(
-                          'الكترونيات',
+                          advertiseModel.category,
                           style: AppStyles.black18,
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Row(
                           children: [
                             const Icon(
@@ -122,7 +113,7 @@ class FavItem extends StatelessWidget {
                               color: AppColors.primaryColor,
                             ),
                             Text(
-                              'القاهرة',
+                              advertiseModel.city,
                               style: AppStyles.black18,
                             ),
                           ],

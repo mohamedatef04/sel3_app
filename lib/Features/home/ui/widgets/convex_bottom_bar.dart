@@ -1,7 +1,7 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sel3_app/Features/home/logic/cubits/nav_bar_cubit.dart';
+import 'package:sel3_app/Features/home/logic/cubits/nav%20bar/nav_bar_cubit.dart';
 import 'package:sel3_app/core/theme/app_colors.dart';
 
 class ConvexBottomBar extends StatelessWidget {

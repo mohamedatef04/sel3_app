@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sel3_app/Features/auth/data/repos/auth_repo_impl.dart';
-import 'package:sel3_app/Features/auth/logic/cubits/verify_otp_cubit.dart';
+import 'package:sel3_app/Features/auth/logic/cubits/verify%20otp/verify_otp_cubit.dart';
 import 'package:sel3_app/Features/auth/ui/widgets/verify_otp_during_change_pass_view_body.dart';
 import 'package:sel3_app/core/services/get_it_service.dart';
 

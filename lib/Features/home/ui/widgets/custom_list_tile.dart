@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sel3_app/Features/auth/logic/cubits/get_user_data_cubit.dart';
+import 'package:sel3_app/Features/search/ui/views/search_view.dart';
 import 'package:sel3_app/core/theme/app_colors.dart';
 import 'package:sel3_app/core/theme/app_styles.dart';
 import 'package:sel3_app/core/utils/assets.dart';
 
-class CustomListTile extends StatelessWidget {
+class CustomListTile extends StatefulWidget {
   const CustomListTile({super.key});
+
+  @override
+  State<CustomListTile> createState() => _CustomListTileState();
+}
+
+class _CustomListTileState extends State<CustomListTile> {
+  @override
+  void initState() {
+    context.read<GetUserDataCubit>().getUserData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +47,24 @@ class CustomListTile extends StatelessWidget {
                     ' اهلا بك !',
                     style: AppStyles.black24.copyWith(fontSize: 22.sp),
                   ),
-                  Text(
-                    'محمد عاظف علي',
-                    style: AppStyles.black18.copyWith(
-                      color: AppColors.primaryColor,
-                    ),
+                  BlocBuilder<GetUserDataCubit, GetUserDataState>(
+                    builder: (context, state) {
+                      if (state is GetUserDataSuccessState) {
+                        return Text(
+                          state.userModel.name,
+                          style: AppStyles.black18.copyWith(
+                            color: AppColors.primaryColor,
+                          ),
+                        );
+                      } else {
+                        return Text(
+                          '',
+                          style: AppStyles.black18.copyWith(
+                            color: AppColors.primaryColor,
+                          ),
+                        );
+                      }
+                    },
                   ),
                 ],
               ),
@@ -47,7 +75,16 @@ class CustomListTile extends StatelessWidget {
           child: Row(
             spacing: 10.w,
             children: [
-              Image.asset(Assets.imagesSearch, width: 30.w, height: 30.h),
+              GestureDetector(
+                onTap: () {
+                  GoRouter.of(context).push(SearchView.routeName);
+                },
+                child: Image.asset(
+                  Assets.imagesSearch,
+                  width: 30.w,
+                  height: 30.h,
+                ),
+              ),
               Image.asset(
                 Assets.imagesNotificationBell,
                 width: 30.w,

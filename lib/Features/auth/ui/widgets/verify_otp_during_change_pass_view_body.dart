@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sel3_app/Features/auth/logic/cubits/verify_otp_cubit.dart';
+import 'package:sel3_app/Features/auth/logic/cubits/verify%20otp/verify_otp_cubit.dart';
 import 'package:sel3_app/Features/auth/ui/views/insert_new_pass_view.dart';
 import 'package:sel3_app/Features/auth/ui/widgets/custom_button.dart';
 import 'package:sel3_app/Features/auth/ui/widgets/otp_widget.dart';

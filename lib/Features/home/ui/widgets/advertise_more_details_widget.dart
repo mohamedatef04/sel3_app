@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sel3_app/Features/home/data/models/advertise_model.dart';
+import 'package:sel3_app/core/functions/convert_time.dart';
 import 'package:sel3_app/core/theme/app_colors.dart';
 import 'package:sel3_app/core/theme/app_styles.dart';
 
 class AdvertiseMoreDetailsWidget extends StatelessWidget {
   const AdvertiseMoreDetailsWidget({
     super.key,
+    required this.advertiseModel,
   });
+  final AdvertiseModel advertiseModel;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,7 @@ class AdvertiseMoreDetailsWidget extends StatelessWidget {
             ),
             const Spacer(),
             Text(
-              'منذ 5 ساعات',
+              timeAgoArabic(advertiseModel.timeCreated),
               style: AppStyles.black24.copyWith(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w400,
@@ -34,7 +38,7 @@ class AdvertiseMoreDetailsWidget extends StatelessWidget {
           ],
         ),
         Text(
-          'وصف الاعلان وصف الاعلان وصف الاعلان وصف الاعلان',
+          advertiseModel.description,
           style: AppStyles.black24.copyWith(fontSize: 22.sp),
         ),
       ],

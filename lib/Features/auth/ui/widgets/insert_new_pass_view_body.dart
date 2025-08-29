@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sel3_app/Features/auth/logic/cubits/insert_new_password_cubit.dart';
+import 'package:sel3_app/Features/auth/logic/cubits/inserts%20new%20pass/insert_new_password_cubit.dart';
 import 'package:sel3_app/Features/auth/ui/views/congrates_view.dart';
 import 'package:sel3_app/Features/auth/ui/widgets/custom_button.dart';
 import 'package:sel3_app/Features/auth/ui/widgets/custom_text_form_field.dart';

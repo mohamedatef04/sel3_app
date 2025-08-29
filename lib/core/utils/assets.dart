@@ -10,9 +10,17 @@ class Assets {
   /// assets/images/banner_2.png
   static const String imagesBanner2 = "assets/images/banner_2.png";
 
+  /// Assets for imagesBlueHeart
+  /// assets/images/blue_heart.png
+  static const String imagesBlueHeart = "assets/images/blue_heart.png";
+
   /// Assets for imagesCongrates
   /// assets/images/congrates.png
   static const String imagesCongrates = "assets/images/congrates.png";
+
+  /// Assets for imagesCustomHeart
+  /// assets/images/custom_heart.png
+  static const String imagesCustomHeart = "assets/images/custom_heart.png";
 
   /// Assets for imagesGoogleIcon
   /// assets/images/google_icon.png
@@ -34,6 +42,10 @@ class Assets {
   /// assets/images/logo.png
   static const String imagesLogo = "assets/images/logo.png";
 
+  /// Assets for imagesNoPic
+  /// assets/images/no_pic.png
+  static const String imagesNoPic = "assets/images/no_pic.png";
+
   /// Assets for imagesNotificationBell
   /// assets/images/notification-bell.png
   static const String imagesNotificationBell = "assets/images/notification-bell.png";
@@ -42,8 +54,24 @@ class Assets {
   /// assets/images/offers_one.jpg
   static const String imagesOffersOne = "assets/images/offers_one.jpg";
 
+  /// Assets for imagesProfile
+  /// assets/images/profile.jpg
+  static const String imagesProfile = "assets/images/profile.jpg";
+
+  /// Assets for imagesProfileNoPic
+  /// assets/images/profile_no_pic.jpg
+  static const String imagesProfileNoPic = "assets/images/profile_no_pic.jpg";
+
   /// Assets for imagesSearch
   /// assets/images/search.png
   static const String imagesSearch = "assets/images/search.png";
+
+  /// Assets for imagesStar
+  /// assets/images/star.png
+  static const String imagesStar = "assets/images/star.png";
+
+  /// Assets for imagesYellowStar
+  /// assets/images/yellow_star.png
+  static const String imagesYellowStar = "assets/images/yellow_star.png";
 }
 

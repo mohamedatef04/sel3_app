@@ -1,199 +1,289 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sel3_app/Features/auth/logic/cubits/get_seller_data_cubit.dart';
+import 'package:sel3_app/Features/chats/data/repos/chat_repo_impl.dart';
+import 'package:sel3_app/Features/chats/ui/views/conversation_view.dart';
+import 'package:sel3_app/Features/home/data/models/advertise_model.dart';
+import 'package:sel3_app/Features/home/ui/widgets/seller_info_placeholder.dart';
+import 'package:sel3_app/Features/seller_profile/ui/views/seller_profile.dart';
+import 'package:sel3_app/core/services/get_it_service.dart';
 import 'package:sel3_app/core/theme/app_colors.dart';
 import 'package:sel3_app/core/theme/app_styles.dart';
-import 'package:sel3_app/core/utils/assets.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class SellerInfoWidget extends StatelessWidget {
-  const SellerInfoWidget({super.key});
+class SellerInfoWidget extends StatefulWidget {
+  const SellerInfoWidget({super.key, required this.advertiseModel});
+  final AdvertiseModel advertiseModel;
+
+  @override
+  State<SellerInfoWidget> createState() => _SellerInfoWidgetState();
+}
+
+class _SellerInfoWidgetState extends State<SellerInfoWidget> {
+  @override
+  void initState() {
+    context.read<GetSellerDataCubit>().getSellerData(
+      userId: widget.advertiseModel.userId,
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      spacing: 10.h,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(
-              Icons.person,
-              color: AppColors.primaryColor,
-              size: 30.sp,
-            ),
+    return BlocBuilder<GetSellerDataCubit, GetSellerDataState>(
+      builder: (context, state) {
+        if (state is GetSellerDataSuccessState) {
+          return Column(
+            spacing: 10.h,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    Icons.person,
+                    color: AppColors.primaryColor,
+                    size: 30.sp,
+                  ),
 
-            Text(
-              'معلومات البائع',
-              style: AppStyles.black24.copyWith(
-                color: AppColors.primaryColor,
-                fontSize: 26.sp,
-              ),
-            ),
-          ],
-        ),
-        Container(
-          width: MediaQuery.sizeOf(context).width,
-
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.r),
-            color: const Color.fromARGB(255, 190, 185, 185),
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-            child: Column(
-              children: [
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: Container(
-                    width: 50.w,
-                    height: 50.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25.r),
+                  Text(
+                    'معلومات البائع',
+                    style: AppStyles.black24.copyWith(
                       color: AppColors.primaryColor,
-                      image: const DecorationImage(
-                        image: AssetImage(Assets.imagesLogo),
-                        fit: BoxFit.fill,
-                      ),
+                      fontSize: 26.sp,
                     ),
                   ),
-                  title: Text(
-                    'اسم البائع',
-                    style: AppStyles.black18.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                ],
+              ),
+              Container(
+                width: MediaQuery.sizeOf(context).width,
+
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.r),
+                  color: const Color.fromARGB(255, 190, 185, 185),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.w,
+                    vertical: 10.h,
                   ),
-                  subtitle: Row(
+                  child: Column(
                     children: [
-                      Text(
-                        'انتقل الي صفحة البائع',
-                        style: AppStyles.black18,
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(
+                            25.r,
+                          ),
+                          child: CachedNetworkImage(
+                            width: 50.w,
+                            height: 50.w,
+                            fit: BoxFit.cover,
+                            imageUrl: state.userModel.image != null
+                                ? state.userModel.image!
+                                : 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_640.png',
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                          ),
+                        ),
+
+                        title: Text(
+                          state.userModel.name,
+                          style: AppStyles.black18.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: GestureDetector(
+                          onTap: () {
+                            GoRouter.of(
+                              context,
+                            ).push(
+                              SellerProfileView.routeName,
+                              extra: state.userModel.id,
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                'انتقل الي صفحة البائع',
+                                style: AppStyles.black18,
+                              ),
+                              Icon(
+                                Icons.arrow_forward,
+                                color: AppColors.primaryColor,
+                                size: 20.sp,
+                              ),
+                            ],
+                          ),
+                        ),
+                        trailing: Container(
+                          width: 70.w,
+                          height: 50.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.r),
+                            color: AppColors.primaryColor,
+                          ),
+                          child: Row(
+                            spacing: 5.w,
+                            children: [
+                              const Icon(
+                                Icons.star,
+                                color: Colors.yellow,
+                              ),
+                              Text(
+                                state.userModel.rates!.isNotEmpty
+                                    ? state.userModel.rates!.first['rate_value']
+                                          .toString()
+                                    : '0.0',
+                                style: AppStyles.black18.copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      Icon(
-                        Icons.arrow_forward,
-                        color: AppColors.primaryColor,
-                        size: 20.sp,
+                      Divider(color: Colors.grey.shade300),
+                      ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: Container(
+                          width: 50.w,
+                          height: 50.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.r),
+                            color: AppColors.primaryColor,
+                          ),
+                          child: const Icon(
+                            Icons.phone,
+                            color: Colors.white,
+                          ),
+                        ),
+                        title: Text(
+                          'رقم الهاتف',
+                          style: AppStyles.black18.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Text(
+                          state.userModel.phone,
+                          style: AppStyles.black18,
+                        ),
+                        trailing: Container(
+                          width: 50.w,
+                          height: 50.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.r),
+                            color: AppColors.primaryColor,
+                          ),
+                          child: const Icon(
+                            Icons.copy,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                  trailing: Container(
-                    width: 70.w,
+                ),
+              ),
+              Row(
+                spacing: 10.w,
+                children: [
+                  Container(
+                    width: MediaQuery.sizeOf(context).width * 0.45,
                     height: 50.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20.r),
                       color: AppColors.primaryColor,
                     ),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       spacing: 5.w,
                       children: [
                         const Icon(
-                          Icons.star,
-                          color: Colors.yellow,
+                          Icons.phone,
+                          color: Colors.white,
                         ),
                         Text(
-                          '4.5',
-                          style: AppStyles.black18,
+                          'اتصل بالبائع',
+                          style: AppStyles.black18.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ),
-                Divider(color: Colors.grey.shade300),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: Container(
-                    width: 50.w,
-                    height: 50.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.r),
-                      color: AppColors.primaryColor,
-                    ),
-                    child: const Icon(
-                      Icons.phone,
-                      color: Colors.white,
-                    ),
-                  ),
-                  title: Text(
-                    'رقم الهاتف',
-                    style: AppStyles.black18.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  subtitle: Text(
-                    '0123456789',
-                    style: AppStyles.black18,
-                  ),
-                  trailing: Container(
-                    width: 50.w,
-                    height: 50.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.r),
-                      color: AppColors.primaryColor,
-                    ),
-                    child: const Icon(
-                      Icons.copy,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Row(
-          spacing: 10.w,
-          children: [
-            Container(
-              width: MediaQuery.sizeOf(context).width * 0.45,
-              height: 50.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.r),
-                color: AppColors.primaryColor,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 5.w,
-                children: [
-                  const Icon(
-                    Icons.phone,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    'اتصل بالبائع',
-                    style: AppStyles.black18.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                  GestureDetector(
+                    onTap: () async {
+                      final SupabaseClient supabase = getIt<SupabaseClient>();
+                      final currentUserId = supabase
+                          .auth
+                          .currentUser!
+                          .id; // ID بتاع المستخدم الحالي
+                      final sellerId = widget
+                          .advertiseModel
+                          .userId; // جاي من الـ AdvertiseModel مثلًا
+
+                      // إنشاء أو الحصول على المحادثة
+                      final conversationId = await getIt<ChatRepoImpl>()
+                          .createOrGetConversation(
+                            user1Id: currentUserId,
+                            user2Id: sellerId,
+                          );
+
+                      // الانتقال لشاشة المحادثة
+                      GoRouter.of(
+                        context,
+                      ).push(
+                        ConversationView.routeName,
+                        extra: {
+                          'conversationId': conversationId,
+                          'currentUserId': currentUserId,
+                        },
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.sizeOf(context).width * 0.45,
+                      height: 50.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.r),
+                        color: AppColors.primaryColor,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        spacing: 5.w,
+                        children: [
+                          const Icon(
+                            Icons.chat,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            'محادثه',
+                            style: AppStyles.black18.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
-            Container(
-              width: MediaQuery.sizeOf(context).width * 0.45,
-              height: 50.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20.r),
-                color: AppColors.primaryColor,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                spacing: 5.w,
-                children: [
-                  const Icon(
-                    Icons.chat,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    'محادثه',
-                    style: AppStyles.black18.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          );
+        } else if (state is GetSellerDataErrorState) {
+          return Center(child: Text(state.errorMessage));
+        } else {
+          return const Skeletonizer(
+            enabled: true,
+            child: SellerInfoPlaceholder(),
+          );
+        }
+      },
     );
   }
 }

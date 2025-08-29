@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sel3_app/Features/chats/ui/views/chats_view.dart';
 import 'package:sel3_app/Features/favourites/ui/views/favourites_view.dart';
-import 'package:sel3_app/Features/home/logic/cubits/nav_bar_cubit.dart';
+import 'package:sel3_app/Features/home/logic/cubits/nav%20bar/nav_bar_cubit.dart';
 import 'package:sel3_app/Features/home/ui/views/home_view.dart';
 import 'package:sel3_app/Features/home/ui/widgets/convex_bottom_bar.dart';
 import 'package:sel3_app/Features/profile/ui/views/profile_view.dart';
-import 'package:sel3_app/Features/upload_product/ui/views/uplaod_product_view.dart';
+import 'package:sel3_app/Features/publish_advertise/ui/views/publish_advertise_view.dart';
 
 class MainHomeViewBody extends StatefulWidget {
   const MainHomeViewBody({super.key});
@@ -19,7 +19,7 @@ class _MainHomeViewBodyState extends State<MainHomeViewBody> {
   final List<Widget> pages = [
     const HomeView(),
     const FavouritesView(),
-    const UplaodProductView(),
+    const PublishAdvertiseView(),
     const ChatsView(),
     const ProfileView(),
   ];

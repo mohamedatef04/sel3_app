@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sel3_app/Features/home/data/models/advertise_model.dart';
 import 'package:sel3_app/core/theme/app_styles.dart';
 
 class AdvertiseInfoWidget extends StatelessWidget {
   const AdvertiseInfoWidget({
     super.key,
+    required this.advertiseModel,
   });
+
+  final AdvertiseModel advertiseModel;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,7 @@ class AdvertiseInfoWidget extends StatelessWidget {
         Row(
           children: [
             Text(
-              'اسم الاعلان',
+              advertiseModel.title,
               style: AppStyles.black24.copyWith(fontSize: 22.sp),
             ),
             const Spacer(),
@@ -25,7 +29,7 @@ class AdvertiseInfoWidget extends StatelessWidget {
               children: [
                 const Icon(Icons.category),
                 Text(
-                  'الفئه',
+                  advertiseModel.category,
                   style: AppStyles.black24.copyWith(
                     fontSize: 18.sp,
                     color: Colors.blueGrey,
@@ -37,7 +41,7 @@ class AdvertiseInfoWidget extends StatelessWidget {
         ),
 
         Text(
-          'المدينه',
+          advertiseModel.city,
           style: AppStyles.black24.copyWith(fontSize: 22.sp),
         ),
 
@@ -50,7 +54,7 @@ class AdvertiseInfoWidget extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              ' السعر الاجمالي',
+              '${advertiseModel.price} جنيه',
               style: AppStyles.black24.copyWith(fontSize: 22.sp),
             ),
           ),

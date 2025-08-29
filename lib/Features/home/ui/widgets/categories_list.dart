@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sel3_app/Features/home/logic/cubits/get%20all%20advertisments/get_all_advertisements_cubit.dart';
 import 'package:sel3_app/Features/home/ui/widgets/category_index.dart';
 
 class CategoriesList extends StatefulWidget {
@@ -41,6 +43,19 @@ class _CategoriesListState extends State<CategoriesList> {
               onTap: () {
                 setState(() {
                   selectedIndx = index;
+                  if (categories[index]['title'] == 'الكل') {
+                    context
+                        .read<GetAllAdvertisementsCubit>()
+                        .getAllAdvertisements(
+                          category: 'select=*',
+                        );
+                  } else {
+                    context
+                        .read<GetAllAdvertisementsCubit>()
+                        .getAllAdvertisements(
+                          category: 'category=eq.${categories[index]['title']}',
+                        );
+                  }
                 });
               },
             ),

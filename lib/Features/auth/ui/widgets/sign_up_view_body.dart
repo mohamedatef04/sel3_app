@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sel3_app/Features/auth/logic/cubits/create%20account%20cubit/create_account_cubit.dart';
 import 'package:sel3_app/Features/auth/ui/widgets/already_have_an_account_widget.dart';
 import 'package:sel3_app/Features/auth/ui/widgets/csutom_text.dart';
@@ -9,7 +8,6 @@ import 'package:sel3_app/Features/auth/ui/widgets/custom_button.dart';
 import 'package:sel3_app/Features/auth/ui/widgets/custom_divider.dart';
 import 'package:sel3_app/Features/auth/ui/widgets/custom_text_form_field.dart';
 import 'package:sel3_app/Features/auth/ui/widgets/google_sign_widget.dart';
-import 'package:sel3_app/Features/home/ui/views/main_home_view.dart';
 import 'package:sel3_app/core/functions/show_snak_bar.dart';
 import 'package:sel3_app/core/theme/app_colors.dart';
 import 'package:sel3_app/core/theme/app_styles.dart';
@@ -172,9 +170,11 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                     BlocConsumer<CreateAccountCubit, CreateAccountState>(
                       listener: (context, state) {
                         if (state is CreateAccountSuccessState) {
-                          GoRouter.of(
+                          showSnakBar(
                             context,
-                          ).pushReplacement(MainHomeView.routeName);
+                            message: 'تم انشاء الحساب بنجاح',
+                          );
+                          Navigator.pop(context);
                         } else if (state is CreateAccountFailureState) {
                           showSnakBar(
                             context,
@@ -202,6 +202,12 @@ class _SignUpViewBodyState extends State<SignUpViewBody> {
                                   .createNewAccount(
                                     email: emailController.text.trim(),
                                     password: passwordController.text.trim(),
+                                    data: {
+                                      'user_name': fullNameController.text
+                                          .trim(),
+                                      'user_email': emailController.text.trim(),
+                                      'user_phone': phoneController.text.trim(),
+                                    },
                                   );
                             } else {
                               setState(() {

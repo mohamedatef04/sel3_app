@@ -1,4 +1,6 @@
+import 'package:sel3_app/Features/auth/data/models/user_model.dart';
 import 'package:sel3_app/core/errors/custom_exeption.dart';
+import 'package:sel3_app/core/network/constants.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseAuthService {
@@ -47,6 +49,39 @@ class SupabaseAuthService {
     }
   }
 
+  Future<void> storeUserData({required Map<String, dynamic> data}) async {
+    try {
+      await supabase.from(usersTable).insert(data);
+    } catch (e) {
+      throw CustomExeption(errorMessage: e.toString());
+    }
+  }
+
+  Future<void> updateUserData({required Map<String, dynamic> data}) async {
+    try {
+      await supabase
+          .from(usersTable)
+          .update(data)
+          .eq('user_id', data['user_id']);
+    } catch (e) {
+      throw CustomExeption(errorMessage: e.toString());
+    }
+  }
+
+  Future<UserModel> getUserData({required String userId}) async {
+    try {
+      final res = await supabase
+          .from(usersTable)
+          .select('*,rates(*)')
+          .eq('user_id', userId)
+          .single();
+
+      return UserModel.fromJson(res);
+    } catch (e) {
+      throw CustomExeption(errorMessage: e.toString());
+    }
+  }
+
   Future<void> sendPhoneOtpToChangePassword({required String phone}) async {
     try {
       await supabase.auth.signInWithOtp(
@@ -89,6 +124,14 @@ class SupabaseAuthService {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future<void> signOut() async {
+    try {
+      await supabase.auth.signOut();
+    } catch (e) {
+      throw CustomExeption(errorMessage: e.toString());
     }
   }
 }

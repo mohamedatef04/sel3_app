@@ -7,15 +7,21 @@ import 'package:sel3_app/Features/auth/ui/views/sign_up_view.dart';
 import 'package:sel3_app/Features/auth/ui/views/verify_account_view.dart';
 import 'package:sel3_app/Features/auth/ui/views/verify_otp_during_change_pass.dart';
 import 'package:sel3_app/Features/chats/ui/views/chats_view.dart';
+import 'package:sel3_app/Features/chats/ui/views/conversation_view.dart';
 import 'package:sel3_app/Features/favourites/ui/views/favourites_view.dart';
+import 'package:sel3_app/Features/home/data/models/advertise_model.dart';
 import 'package:sel3_app/Features/home/ui/views/advertise_details_view.dart';
 import 'package:sel3_app/Features/home/ui/views/home_view.dart';
 import 'package:sel3_app/Features/home/ui/views/main_home_view.dart';
 import 'package:sel3_app/Features/on_boarding/ui/views/onboarding_view.dart';
+import 'package:sel3_app/Features/profile/ui/views/personal_details_view.dart';
+import 'package:sel3_app/Features/profile/ui/views/personal_profile_view.dart';
 import 'package:sel3_app/Features/profile/ui/views/profile_view.dart';
+import 'package:sel3_app/Features/seller_profile/ui/views/seller_profile.dart';
+import 'package:sel3_app/Features/search/ui/views/search_view.dart';
 import 'package:sel3_app/Features/splash/ui/view/splash_view.dart';
 
-import 'package:sel3_app/Features/upload_product/ui/views/uplaod_product_view.dart';
+import 'package:sel3_app/Features/publish_advertise/ui/views/publish_advertise_view.dart';
 
 final router = GoRouter(
   routes: [
@@ -73,7 +79,9 @@ final router = GoRouter(
     ),
     GoRoute(
       path: AdvertiseDetailsView.routeName,
-      builder: (context, state) => const AdvertiseDetailsView(),
+      builder: (context, state) => AdvertiseDetailsView(
+        advertiseModel: state.extra as AdvertiseModel,
+      ),
     ),
 
     GoRoute(
@@ -81,8 +89,8 @@ final router = GoRouter(
       builder: (context, state) => const FavouritesView(),
     ),
     GoRoute(
-      path: UplaodProductView.routeName,
-      builder: (context, state) => const UplaodProductView(),
+      path: PublishAdvertiseView.routeName,
+      builder: (context, state) => const PublishAdvertiseView(),
     ),
     GoRoute(
       path: ChatsView.routeName,
@@ -91,6 +99,36 @@ final router = GoRouter(
     GoRoute(
       path: ProfileView.routeName,
       builder: (context, state) => const ProfileView(),
+    ),
+
+    GoRoute(
+      path: PersonalDetailsView.routeName,
+      builder: (context, state) => const PersonalDetailsView(),
+    ),
+
+    GoRoute(
+      path: PersonalProfileView.routeName,
+      builder: (context, state) => const PersonalProfileView(),
+    ),
+    GoRoute(
+      path: ConversationView.routeName,
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>;
+        return ConversationView(
+          conversationId: extra['conversationId'] as String,
+          currentUserId: extra['currentUserId'] as String,
+        );
+      },
+    ),
+    GoRoute(
+      path: SearchView.routeName,
+      builder: (context, state) => const SearchView(),
+    ),
+    GoRoute(
+      path: SellerProfileView.routeName,
+      builder: (context, state) => SellerProfileView(
+        sellerId: state.extra as String,
+      ),
     ),
   ],
 );
